@@ -1,0 +1,33 @@
+{% extends "main.html" %}
+{% block content %}
+<div class="container">
+    <h4>Order Lists</h4>
+    <hr />
+    <table id="list" class="table table-sm table-responsive-sm">
+        <thead>
+            <th>Order Date</th>
+            <th>Due Date</th>
+            <th>Order RefNo</th>
+            <th>Customer</th>
+            <th>Branch</th>
+            <th>Shipping Method</th>
+            <th>Shipping Address</th>
+            <th>Color</th>
+        </thead>
+        <tbody>
+            {% for order in data %}
+            <tr>
+                <td>{{ order['timestamp'] }}</td>
+                <td>{{ order.dueDate }}</td>
+                <td><a href="{{ url_for('orderDetails', orderId = order.id, customerId = order.customerId) }}" class="btn btn-link">{{ order.orderRefNo }}</a></td>
+                <td>{{ order['customerName'] }}</td>
+                <td>{{ order['orderLocation'] }}</td>
+                <td>{{ order['method'] }}</td>
+                <td>{{ order['shipAddress'] }}</td>
+                <td>{{ order['color'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

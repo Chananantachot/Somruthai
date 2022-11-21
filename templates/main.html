@@ -1,0 +1,89 @@
+<html>
+    <head>
+      <title>Somruthai</title>
+        <meta charset="UTF-8" />
+         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/logo_small.ico')}}">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <!-- <link rel="stylesheet" href="https://cdn.datatables.net/select/1.5.0/css/select.dataTables.min.css"> -->
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="{{url_for('static', filename='css/_bootstrap.css')}}">
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.3.2/css/buttons.dataTables.min.css">
+        <link rel="stylesheet" href="{{url_for('static', filename='css/site.css')}}">
+    </head>
+    <body>
+        <nav class="navbar">
+            <div class="navbar-container">
+              <div class="navbar-brand">
+                <a href="{{ url_for('index') }}">
+                  <img src="{{ url_for('static', filename='img/logo_small.jpeg') }}" alt="Somruthai" />
+                </a>
+              </div>
+
+              <ul class="navbar-nav-left">
+                {% if not is_user_authen() %}
+                    {% for menu in menus[1]['user'] %}
+                      {% if menu['active'] %} 
+                        <li class="active">
+                      {% else %}
+                      <li>
+                      {% endif %}
+                      <a href="{{ menu.url }}">{{ menu.title }}</a>
+                    </li>
+                    {% endfor %}
+                {% else %}
+                {% for menu in menus[0]['admin'] %}
+                  {% if menu['active'] %} 
+                    <li class="active">
+                  {% else %}
+                  <li>
+                  {% endif %}
+                  <a href="{{ menu.url }}" class="btn btn-link position-relative">
+                    {{ menu.title }}
+                    {% set notification = orderNotification()  %}
+                    {% if menu.title == 'Orders' and notification > 0 %}
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                      {{ notification }} 
+                      <span class="visually-hidden">New alerts</span>
+                    </span>
+                    {% endif %}
+                  </a>
+                </li>
+                {% endfor %}
+                {% endif %}
+              </ul>
+              {% if not is_user_authen() %}
+              <ul class="navbar-nav-right">
+                <li><a href="{{ url_for('adminLogin') }}" class="mybtn mybtn-dark-outline">Admin Log in</a></li>
+              </ul>
+              {% else %}
+              <ul class="navbar-nav-right">
+                {% if user['branch'] != 'All' %}
+                   <li><span style="color: #fff;">Hello, Administrator! [ {{ user['branch'] }} ]</span></li>
+                {% else %}
+                  <li><span style="color: #fff;">Hello, Administrator!</span></li>
+                 {% endif %}
+                <li><a href="{{ url_for('adminLogOut') }}" class="mybtn mybtn-dark-outline">Log out</a></li>
+              </ul>
+              {% endif %}
+          </nav>
+        {% block content %}
+        {% endblock %}
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.3.2/js/dataTables.buttons.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.html5.min.js"></script>
+        <script src="https://cdn.datatables.net/buttons/2.3.2/js/buttons.print.min.js"></script>
+        <script src="https://cdn.datatables.net/select/1.5.0/js/dataTables.select.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/jquery.validate.min.js" integrity="sha512-UdIMMlVx0HEynClOIFSyOrPggomfhBKJE28LKl8yR3ghkgugPnG6iLfRfHwushZl1MOPSY6TsuBDGPK2X4zYKg==" crossorigin="anonymous"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.2/additional-methods.min.js" integrity="sha512-6Uv+497AWTmj/6V14BsQioPrm3kgwmK9HYIyWP+vClykX52b0zrDGP7lajZoIY1nNlX4oQuh7zsGjmF7D0VZYA==" crossorigin="anonymous"></script>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.1/js/bootstrap.min.js" integrity="sha512-UR25UO94eTnCVwjbXozyeVd6ZqpaAE9naiEUBK/A+QDbfSTQFhPGj5lOR6d8tsgbBk84Ggb5A3EkjsOgPRPcKA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+    </body>
+</html>

@@ -1,0 +1,141 @@
+{% extends "main.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Customer</h5>
+                  </div>
+                <div class="card-body">
+                     <div class="form-group row">
+                        <label for="firstName" class="col-sm-4 col-form-label"><strong>Firstname</strong></label>
+                        <div class="col-sm-6">
+                          <input type="text" readonly class="form-control-plaintext" id="firstName" value="{{ data.customer.firstName }}">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="lastName" class="col-sm-4 col-form-label"><strong>Lastname</strong></label>
+                        <div class="col-sm-6">
+                            <input type="text" readonly class="form-control-plaintext" id="lastName" value="{{ data.customer.lastName }}">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="lastName" class="col-sm-4 col-form-label"><strong>Institution</strong></label>
+                        <div class="col-sm-6">
+                            <input type="text" readonly class="form-control-plaintext" id="lastName" value="{{ getInstitution(data.customer.institution) }}">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="lastName" class="col-sm-4 col-form-label"><strong>Major</strong></label>
+                        <div class="col-sm-6">
+                            <input type="text" readonly class="form-control-plaintext" id="lastName" value="{{ data.customer.major }}">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="lastName" class="col-sm-4 col-form-label"><strong>Degree</strong></label>
+                        <div class="col-sm-6">
+                            <input type="text" readonly class="form-control-plaintext" id="lastName" value="{{ data.customer.degree }}">
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                        <label for="lastName" class="col-sm-4 col-form-label"><strong>Mobile</strong></label>
+                        <div class="col-sm-6">
+                            <input type="text" readonly class="form-control-plaintext" id="lastName" value="{{ data.customer.mobileNo }}">
+                        </div>
+                      </div>
+                      <div class="form-group row pb-3">
+                        <label for="lastName" class="col-sm-4 col-form-label"><strong>Line</strong></label>
+                        <div class="col-sm-6">
+                            <input type="text" readonly class="form-control-plaintext" id="lastName" value="{{ data.customer.lineId }}">
+                        </div>
+                     </div>
+                </div>    
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Order | {{ data.order.orderLocation }}</h5>
+                  </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label for="firstName" class="col-sm-4 col-form-label"><strong>Order Ref No#</strong></label>
+                        <div class="col-sm-6">
+                          <input type="text" readonly class="form-control-plaintext" id="firstName" value="{{ data.order.orderRefNo }}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="firstName" class="col-sm-4 col-form-label"><strong>Order date</strong></label>
+                        <div class="col-sm-6">
+                          <input type="text" readonly class="form-control-plaintext" id="firstName" value="{{ data.order.timestamp }}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="firstName" class="col-sm-4 col-form-label"><strong>Order Due date</strong></label>
+                        <div class="col-sm-6">
+                          <input type="text" readonly class="form-control-plaintext" id="firstName" value="{{ data.order.dueDate }}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="firstName" class="col-sm-4 col-form-label"><strong>Color</strong></label>
+                        <div class="col-sm-6">
+                          <input type="text" readonly class="form-control-plaintext" id="firstName" value="{{ data.order.color }}">
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label for="firstName" class="col-sm-4 col-form-label"><strong>Shipping methods</strong></label>
+                        <div class="col-sm-6">
+                          <input type="text" readonly class="form-control-plaintext" id="firstName" value="{{ data.order.method }}">
+                        </div>
+                    </div>
+                    <div class="form-group row pb-1">
+                        <label for="firstName" class="col-sm-4 col-form-label"><strong>Shipping address</strong></label>
+                        <div class="col-sm-6">
+                          <textarea rows="3" cols="8" readonly class="form-control-plaintext" id="firstName">{{ data.order.shipAddress }}</textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <center>
+    <div class="col-sm-12 table-responsive-sm pt-4">
+        <table id="tbItems" name="tbItems" class="table table-md">
+            <thead style="background-color: rgba(183, 183, 183, 0.971);">
+                <th>รายการ</th>
+                <th>ประเภท</th>
+                <th>จำนวน</th>
+                <th>ค่าประกัน/มัดจำ</th>
+                <th>รวม(บาท)</th>
+                <th></th>
+            </thead>
+            <tbody>
+                {% for item in data['items'] %}
+                <tr>
+                    <td style="width: 60%;">{{ item['item'] }}</td>
+                    <td  style="width: 8%;">{{ getOrderKind(item['orderKind']) }}</td>
+                    <td style="width: 10%;">{{ item.qty }}</td>
+                    <td style="width: 10%; text-align: right;">{{ "%.2f"|format(item.depositAmount) }}</td>
+                    {% if item.orderKind == 'rent' %}
+                    <td class="col-money">{{ "%.2f"|format(item.totalAmount) }}</td>
+                    {% else %}
+                    <td class="col-money">{{ "%.2f"|format(item.totalAmount - item.depositAmount) }}</td>
+                    {% endif %}
+                    <td style="width: 10%;">
+                        <select class="form-select form-control form-control-sm">
+                            <option value="open">Open</option>
+                            <option value="paid">Paid</option>
+                            <option value="end">End</option>
+                        </select>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <input type="text" style="visibility: hidden;" id="myitems" name="myitems" value="" />
+    </div>
+</center>
+</div>
+{% endblock %}

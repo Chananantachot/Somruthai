@@ -1,0 +1,39 @@
+{% extends "main.html" %}
+{% block content %}
+<div class="container">
+    <h4>Customer Lists</h4>
+    <hr />
+    <table id="list" class="table table-sm table-responsive-sm">
+        <thead>
+            <th></th>
+            <th>Firstname</th>
+            <th>Lastname</th>
+            <th>Gender</th>
+            <th>Institution</th>
+            <th>Major</th>
+            <th>Degree</th>
+            <th>Weight</th>
+            <th>Height</th>
+            <th>Mobile</th>
+            <th>LineId</th>
+        </thead>
+        <tbody>
+            {% for cust in data %}
+                <tr>
+                    <td></td>
+                    <td>{{ cust['firstName'] }}</td>
+                    <td>{{ cust['lastName'] }}</td>
+                    <td>{{ cust['gender'] }}</td>
+                    <td>{{ cust['institution'] }}</td>
+                    <td>{{ cust['major'] }}</td>
+                    <td>{{ cust['degree'] }}</td>
+                    <td>{{ cust['weight'] }}</td>
+                    <td>{{ cust['height'] }}</td>
+                    <td>{{ cust['mobileNo'] }}</td>
+                    <td>{{ cust['lineId'] }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>    
+{% endblock %}

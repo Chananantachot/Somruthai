@@ -1,0 +1,16 @@
+{% extends "main.html" %}
+{% block content %}
+<div class="container">
+    {% if status == 200 %}
+        <div class="alert alert-info text-center" role="alert">
+            Congratulation! you are successfully made your order purchase or rental of your items.
+        </div>
+        <div class="text-center">
+            Thanks you for your purchase or rent with us, today! Hopefully we can have a quick delivery of your items as soon as possible. <br />
+            Please kinly use this Order Ref No : <strong>{{ orderRefNo }}</strong> , To contact with us when you want to pick up or return your item(s).
+        </div>
+    {% else %}
+        <div class="alert alert-danger" role="alert">OOP! Something wrong happended while the system processing your order informations. </div>
+    {% endif %}
+</div>
+{% endblock %}

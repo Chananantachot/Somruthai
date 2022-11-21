@@ -1,0 +1,252 @@
+{% extends "main.html" %}
+{% block content %}
+<div class="container">
+    <h4>Customer information</h4>
+    <form id="orderForm" method="post" action="{{ url_for('submitOrder') }}">
+        <div class="form-group col-md-6">
+            <label for="firstName" class="control-label col-sm-2">
+                <strong>First name</strong>
+            </label>
+            <input type="text" class="form-control" id="firstName" name="firstName" placeholder="eg: Someone"
+                value="{{order.customer.firstName}}" />
+        </div>
+        <div class="form-group col-md-6">
+            <label for="lastName" class="control-label col-sm-2">
+                <strong>Last name</strong>
+            </label>
+            <input type="text" class="form-control" id="lastName" name="lastName" placeholder="eg: Example"
+                value="{{order.customer.lastName}}" />
+        </div>
+        <div class="form-group col-md-6">
+            <label for="degree" class="control-label col-sm-2">
+                <strong>Gender</strong>
+            </label>
+            <select class="form-select" name="gender" id="gender">
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+        </div>
+        <div class="row col-md-9">
+            <div class="form-group col-md-4">
+                <label for="institution" class="control-label col-sm-2">
+                    <strong>Institution</strong>
+                </label>
+                <select class="form-select" name="institution" id="institution">
+                    <option value="spu">ม.ศรีปทุม (SPU)</option>
+                    <option value="ku">ม.เกษตรศาสตร์ (KU)</option>
+                    <option value="kmu">ม.เทคโนโลยีพระจอมเกล้า KMU (พระนครเหนือ, ลาดกระบัง, ธนบุรี)</option>
+                    <option value="bu">ม.กรุงเทพ (BU)</option>
+                    <option value="kcu">ม.หัวเฉียวเฉลิมพระเกียรติ (HCU)</option>
+                    <option value="bsu">ม.กรุงเทพสุวรรณภูมิ (BSU)</option>
+                    <option value="rsu">ม.รังสิต (RSU)</option>
+                    <option value="utcc">ม.หอการค้าไทย (UTCC)</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div class="form-group col-md-4">
+                <label for="opt_institution" class="control-label col-sm-2">
+                    &nbsp;
+                </label>
+                <input type="text" class="form-control" id="opt_institution" name="opt_institution"
+                    placeholder="eg: institution name" value="" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-3">
+                <label for="major" class="control-label col-sm-2">
+                    <strong>Major</strong>
+                </label>
+                <input type="text" class="form-control" id="major" name="major" placeholder="eg: Administrator"
+                    value="{{order.customer.firstName}}" />
+            </div>
+            <div class="form-group col-md-3">
+                <label for="degree" class="control-label col-sm-2">
+                    <strong>Degree</strong>
+                </label>
+                <select class="form-select" name="degree" id="degree">
+                    <option value="bachelor">Bachelor degrees</option>
+                    <option value="master">Master degrees</option>
+                    <option value="phd">Ph.D</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class=" col-md-3">
+                <label for="weight" class="control-label col-md-4">
+                    <strong>Weight</strong>
+                </label>
+                <input type="number" class="form-control" id="weight" name="weight" placeholder="eg: 70" value=""  oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');"/>
+            </div>
+            <div class=" col-md-3">
+                <label for="height" class="control-label col-md-4">
+                    <strong>Height</strong>
+                </label>
+                <input type="number"  class="form-control" id="height" name="height" placeholder="eg: 170" value="" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" />
+            </div>
+        </div>
+        <div class="row">
+            <div class=" col-md-3">
+                <label for="mobileNo" class="control-label col-md-4">
+                    <strong>Mobile No.</strong>
+                </label>
+                <input type="text" class="form-control" id="mobileNo" name="mobileNo" placeholder="eg: 0123456789"
+                    value="" />
+            </div>
+            <div class=" col-md-3">
+                <label for="lineId" class="control-label col-md-4">
+                    <strong>Line Id</strong>
+                </label>
+                <input type="text" class="form-control" id="lineId" name="lineId" placeholder="eg: @myid" value="" />
+            </div>
+        </div>
+        <hr />
+        <h4>Order information</h4>
+        <div class="row">
+            <div class="col-md-3">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="LatKrabangLocation" name="orderLocate" value="LatKrabang">
+                    <label class="form-check-label" for="orderLocate">สาขาลาดกระบัง</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="MinburiLocation" name="orderLocate" value="Minburi">
+                    <label class="form-check-label" for="orderLocate">สาขามีนบุรี</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="BangkhenLocation" name="orderLocate" value="Bangkhen">
+                    <label class="form-check-label" for="orderLocate">สาขาบางเขน</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" id="Line" name="orderLocate" value="Line">
+                    <label class="form-check-label" for="orderLocate">Line</label>
+                </div>
+                <div id="errors"></div>
+            </div>
+            <div class="form-group col-md-3">
+                <label for="firstName" class="control-label col-sm-2">
+                    <strong>Color</strong>
+                </label>
+                <input type="text" class="form-control" id="color" name="color" placeholder="Color" value="" />
+            </div>
+        </div><br />
+        <div class="col-md-9 table-responsive-sm">
+            <table id="tbItems" name="tbItems" class="table table-sm">
+                <thead>
+                    <th>รายการ</th>
+                    <th></th>
+                    <th>ราคา/หน่วย</th>
+                    <th>ค่าประกัน/หน่วย</th>
+                    <th>จำนวน</th>
+                    <th></th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    {% for item in order['items'] %}
+                    <tr>
+                        <td>{{ item['item'] }}</td>
+                        <td>
+                            {% if item['rentOnly'] == 1 and item['purchaseOnly'] == 1 and item['cuttingOnly'] == 1 %}
+                                <div id="{{ item['id'] }}" class="col-sm-10">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" id="{{ item['id'] }}_orderKind" name="orderKind" value="rent">
+                                        <label class="form-check-label" for="orderKind">เช่า</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" id="{{ item['id'] }}_orderKind" name="orderKind" value="cutitng">
+                                        <label class="form-check-label" for="orderKind">ตัด</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" id="{{ item['id'] }}_orderKind" name="orderKind" value="buy">
+                                        <label class="form-check-label" for="orderKind">ตัดซื้อ</label>
+                                    </div>
+                                </div>
+                            {% elif item['rentOnly'] == 1 and item['purchaseOnly'] == 1 %}    
+                            <div id="{{ item['id'] }}" class="col-sm-10">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="{{ item['id'] }}_orderKind" name="orderKind" value="rent">
+                                    <label class="form-check-label" for="orderKind">เช่า</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="{{ item['id'] }}_orderKind" name="orderKind" value="buy">
+                                    <label class="form-check-label" for="orderKind">ตัดซื้อ</label>
+                                </div>
+                            </div>    
+                            {% elif item['rentOnly'] == 1 and item['cuttingOnly'] == 1 %} 
+                            <div id="{{ item['id'] }}" class="col-sm-10">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="{{ item['id'] }}_orderKind" name="orderKind"  value="rent">
+                                    <label class="form-check-label" for="orderKind">เช่า</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="{{ item['id'] }}_orderKind" name="orderKind" value="cutitng">
+                                    <label class="form-check-label" for="orderKind">ตัด</label>
+                                </div>
+                            </div>
+                            {% elif item['forPurchase'] == 1 and item['cuttingOnly'] == 1 %}
+                            <div id="{{ item['id'] }}" class="col-sm-10">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="{{ item['id'] }}_orderKind" name="orderKind" value="cutitng">
+                                    <label class="form-check-label" for="orderKind">ตัด</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" id="{{ item['id'] }}_orderKind" name="orderKind" value="buy">
+                                    <label class="form-check-label" for="orderKind">ตัดซื้อ</label>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td style="width: 14%; text-align: right;">{{ item.unitPrice }}</td>
+                        <td style="width: 14%; text-align: right;">{{ "%.2f"|format(item.depositRate * item.unitPrice) }}</td>
+                        <td style="width: 10%;">
+                            <input type="number" pattern="\d*" min="0" max="{{ item.unitInStock }}" step="1" class="form-control" id="{{ item['id'] }}_quantity"
+                                placeholder="" value="0" onchange="qtyOnchanged($(this) ,'{{ item.unitInStock }}')" oninput="this.value = this.value.replace(/[^0-9.]/g, ''); this.value = this.value.replace(/(\..*)\./g, '$1');" />
+                        </td>
+                        <td style="width: 5%;">
+                            <button type="button" class="btn btn-primary"  id="btn_{{ item['id'] }}_add"
+                                onclick="onAdditems('{{item.id }}' ,'{{item.item }}', $('#{{ item.id }}_quantity').val(),'{{item.unitInStock}}','{{item.unitPrice}}','{{item.depositRate}}','{{item.rentOnly}}', '{{item.purchaseOnly}}' ,'{{item.cuttingOnly}}'); return false;"><i class="fa-solid fa-cart-plus"></i>
+                            </button>
+                        </td>
+                        <td style="width: 5%;">
+                            <button type="button" class="btn btn-danger" id="btn_{{ item['id'] }}_remove" disabled
+                                onclick="onRemoveitems('{{item.id }}', $('#{{ item.id }}_other') ,$('#{{ item.id }}_quantity')); return false;"><i class="fa-regular fa-trash-can"></i>
+                            </button>
+                        </td>   
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <input type="text" style="visibility: hidden;" id="myitems" name="myitems" value="" />
+        </div>
+        <hr />
+        <h4>Shipping.</h4>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="LatKrabangBranch" name="shipMethod" value="LatKrabang">
+            <label class="form-check-label" for="shipMethod">สาขาลาดกระบัง</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="Postage" name="shipMethod" value="Postage">
+            <label class="form-check-label" for="shipMethod">ส่งไปรษณีย์ (100 บาท)</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="BangkhenBranch" name="shipMethod" value="Bangkhen">
+            <label class="form-check-label" for="shipMethod">สาขาบางเขน</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="Messenger" name="shipMethod" value="Messenger">
+            Messenger
+            <em class="text-muted" style="font-size: small;">(ลูกค้าสามารถเรียกมารับชุดได้โดยนัดหมายกับแอดมินทางไลน์ก่อนค่ะ)</em>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="address" class="control-label col-sm-2">Address</label>
+            <textarea rows="2" cols="60" id="address" name="address" class="form-contral" disabled></textarea>
+        </div>
+        <div id="shipMethods_errors"></div>
+        <input type="hidden" id="customer_id" name="customer_id" value="{{ order['customer']['id'] }}" />
+        <input type="hidden" id="order_id" name="order_id" value="{{ order['id'] }}" />
+        <input type="hidden" id="order_status" name="order_status" value="{{ order['status'] }}" />
+        <div class="footer">
+             <input type="submit" id="btnSubmit" class="mybtn mybtn-dark-outline" value="Submit order" />
+        </div>
+        <br />
+    </form>
+</div>
+{% endblock %}
